@@ -1,0 +1,11 @@
+# libaries which we use
+flask
+flask-sqlalchemmy
+flask_wtf
+wtforms
+email-validator
+flask_bcrypt
+flask_login
+# postgresql better to use then sqllite
+psycopg2 
+

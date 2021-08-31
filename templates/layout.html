@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+      <!-- with this we can change our title in each page-->
+      <title>
+          {% block title%}
+          {% endblock %}
+      </title>
+   </head>
+   <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Ariels Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- here going to be our links which in the top of the page -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <!--  url_for('name_Of_Function') : if we want change our route it still will work. -->
+                <!--(we could also write just name of route, but if we change the name of route in market.py it will not work) -->
+                <a class="nav-link" href="{{ url_for('home')}}">Home <span class="sr-only">(current)</span></a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('marketpage')}}">Market</a>
+            </li>
+        </ul>
+        <!-- current_user is function which grabs the current user and this function built in flask-login.
+             .is_authenticated if function from UserMixin-->
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav">
+            <!-- we can see in beatiful way the budget of user -->
+            <li class="nav-item">
+                <a class="nav-link" style="color:lawngreen; font-weight: bold">
+                    <i class = "fas fa-coins"></i>
+                    {{ current_user.prettier_budget }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Welcom, {{ current_user.user_name }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logoutpage')}}">Logout</a>
+            </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('loginpage')}}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('registerpage')}}">Register</a>
+            </li>
+        </ul>
+        {% endif %}
+        </div>
+    </nav>
+    <!-- showing all kinds of messages in all HTML pages -->
+    {% with messages = get_flashed_messages(with_categories = True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <!-- we take category = 'danger' from botstrap which responalbe to showing messages in beatiful way.
+            m1-2 mb-1 are classes in botstrap-->
+                <div class="alert alert-{{ category }}">
+                    <button type = 'button', class = "m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span> <!-- data-dismiss, aria-label,aria-hidden are responsible to "X" closing tag-->
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {%  endwith %}
+    
+    {% block content %}
+    {% endblock %}
+
+      
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+   </body>
+   <style>
+      body {
+      background-color: #212121;
+      color: white
+      }
+   </style>
+</html>

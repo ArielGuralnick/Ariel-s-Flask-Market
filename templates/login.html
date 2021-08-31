@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Login page
+{% endblock %}
+
+{% block content %}
+<body class = "text-center">
+    <!-- class - container responsable to minimize our web that it will show in good size-->
+    <div class = "container">
+        <form method='POST' class = "form-signin" style="color:white">
+            {{ form.hidden_tag() }}
+            <br>
+            <h1 class="h3 nb-3 font-weight-normal">
+                Please Login
+            </h1>
+            <br>
+            {{ form.user_name.label() }}
+            {{ form.user_name(class = "form-control", placeholder="User Name")}}
+
+            {{ form.password.label() }}
+            {{ form.password(class = "form-control", placeholder="Password")}}
+            <br> 
+
+            <div class="checkbox nb-3">
+                <h6> Do not have a account? </h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('registerpage') }}">Register</a>
+            </div>
+            <br>
+
+            {{ form.sumbit(class="btn btn-lg btn-block btn-primary")}}
+
+        </form>
+    </div>
+</body>
+{% endblock %}

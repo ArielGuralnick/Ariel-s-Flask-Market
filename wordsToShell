@@ -1,0 +1,24 @@
+
+from market.models import db
+db.create_all()
+from market.models import Item, User
+u1 = User(user_name='Ariel Guralnick', email = 'Arielgur99@gmail.com', user_password_hash = 'Ag2020$$')
+item1 = Item(name='Iphone 12', price=1000, barcode='749684285984', description='128GB, color is blue')
+item2 = Item(name='Galaxy 10', price=800, barcode='597864978532', description='64GB, color is black')
+db.session.add(u1)
+db.session.commit()
+db.session.add(item1)
+db.session.commit()
+db.session.add(item2)
+db.session.commit()
+
+# associate Item to User (we must do that with id has writen in the and)
+item1.owner = User.query.filter_by(user_name='Ariel Guralnick').first().id
+db.session.add(item1)
+db.session.commit()
+# if we want to see the associate which we created
+i = Item.query.filter_by(name='Iphone 12').first()
+i.owned_user
+
+# if we want to go back to Previous changes. 
+db.session.rollback()

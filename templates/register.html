@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block title %}
+    register page
+{% endblock %}
+
+{% block content %}
+<body class = "text-center">
+    <div class="container">
+        <!--POST method is affecting the data on website, the class has written in forms.py.
+        the class form-control is showing the display more nice (it is bootstrap class)-->
+        <form method="POST" class="RegisterForm" style="color:white">
+            <!-- this line protect us from attackers-->
+            {{ form.hidden_tag()}}
+            <br>
+            <h1>
+                Please Create Your Account
+            </h1>
+            <br>
+            {{ form.user_name.label() }}
+            {{ form.user_name(class = "form-control", placeholder="Please enter User Name") }}
+            <br>
+            {{ form.email_address.label() }}
+            {{ form.email_address(class = "form-control", placeholder="Please enter Email") }}
+            <br>
+            {{ form.password1.label() }}
+            {{ form.password1(class = "form-control", placeholder="Please enter Password") }}
+            <br>
+            {{ form.password2.label() }}
+            {{ form.password2(class = "form-control", placeholder="Confirm Password") }}
+            <br>
+            <div class="checkbox nb-3">
+                <h6> Already have a account? </h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('loginpage') }}">Login</a>
+            </div> 
+            <br>
+
+            {{form.sumbit(class = "btn btn-lg btn-block btn-primary")}}
+        </form>
+    </div>
+</body>
+{% endblock %}
